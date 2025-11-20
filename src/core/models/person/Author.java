@@ -2,8 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package core;
+package core.models.person;
 
+import core.models.book.Book;
+import core.Publisher;
+import core.models.person.Person;
 import java.util.ArrayList;
 
 /**
