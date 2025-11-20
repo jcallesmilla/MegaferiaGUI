@@ -4,9 +4,8 @@
  */
 package core.models.person;
 
+import core.models.Publisher;           // ← CORRECTO: core.models
 import core.models.book.Book;
-import core.Publisher;
-import core.models.person.Person;
 import java.util.ArrayList;
 
 /**
@@ -20,6 +19,13 @@ public class Author extends Person {
     public Author(long id, String firstname, String lastname) {
         super(id, firstname, lastname);
         this.books = new ArrayList<>();
+    }
+    
+    @Override
+    public Author clone() {
+        Author cloned = (Author) super.clone();
+        cloned.books = new ArrayList<>(this.books);
+        return cloned;
     }
 
     public ArrayList<Book> getBooks() {

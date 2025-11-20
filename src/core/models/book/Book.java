@@ -4,16 +4,12 @@
  */
 package core.models.book;
 
-import core.Publisher;
+import core.models.Publisher;
 import core.models.person.Author;
 import java.util.ArrayList;
 
-/**
- *
- * @author edangulo
- */
-public abstract class Book {
-    
+public abstract class Book implements Cloneable {
+
     protected String title;
     protected ArrayList<Author> authors;
     protected final String isbn;
@@ -22,47 +18,45 @@ public abstract class Book {
     protected double value;
     protected Publisher publisher;
 
-    public Book(String title, ArrayList<Author> authors, String isbn, String genre, String format, double value, Publisher publisher) {
+    public Book(String title, ArrayList<Author> authors, String isbn, String genre,
+                String format, double value, Publisher publisher) {
         this.title = title;
-        this.authors = authors;
+        this.authors = new ArrayList<>(authors);  // defensive copy
         this.isbn = isbn;
         this.genre = genre;
         this.format = format;
         this.value = value;
         this.publisher = publisher;
-        
-        for (Author autor : this.authors) {
-            autor.addBook(this);
+
+        // Relación bidireccional
+        for (Author a : authors) {
+            a.addBook(this);
         }
-        this.publisher.addBook(this);
+        publisher.addBook(this);
     }
 
-    public String getTitle() {
-        return title;
+    @Override
+    public Book clone() {
+        try {
+            Book cloned = (Book) super.clone();
+            cloned.authors = new ArrayList<>(this.authors);
+            return cloned;
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public ArrayList<Author> getAuthors() {
-        return authors;
-    }
+    // GETTERS (sin setters → inmutabilidad)
+    public String getTitle() { return title; }
+    public ArrayList<Author> getAuthors() { return new ArrayList<>(authors); }
+    public String getIsbn() { return isbn; }
+    public String getGenre() { return genre; }
+    public String getFormat() { return format; }
+    public double getValue() { return value; }
+    public Publisher getPublisher() { return publisher; }
 
-    public String getIsbn() {
-        return isbn;
+    @Override
+    public String toString() {
+        return title + " - " + isbn + " (" + format + ")";
     }
-
-    public String getGenre() {
-        return genre;
-    }
-
-    public String getFormat() {
-        return format;
-    }
-
-    public double getValue() {
-        return value;
-    }
-
-    public Publisher getPublisher() {
-        return publisher;
-    }
-    
 }

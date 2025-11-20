@@ -4,35 +4,29 @@
  */
 package core.models.book;
 
-import core.Publisher;
-import core.models.book.Book;
-import core.models.person.Narrator;
+import core.models.Publisher;
 import core.models.person.Author;
+import core.models.person.Narrator;
 import java.util.ArrayList;
 
-/**
- *
- * @author edangulo
- */
 public class Audiobook extends Book {
-    
-    private int duration;
-    private Narrator narrador;
 
-    public Audiobook(String title, ArrayList<Author> authors, String isbn, String genre, String format, double value, Publisher publisher, int duration, Narrator narrator) {
+    private int duration;
+    private Narrator narrator;
+
+    public Audiobook(String title, ArrayList<Author> authors, String isbn, String genre,
+                     String format, double value, Publisher publisher, int duration, Narrator narrator) {
         super(title, authors, isbn, genre, format, value, publisher);
         this.duration = duration;
-        this.narrador = narrator;
-        
-        this.narrador.addBook(this);
+        this.narrator = narrator;
+        narrator.addBook(this);
     }
 
-    public int getDuration() {
-        return duration;
+    @Override
+    public Audiobook clone() {
+        return (Audiobook) super.clone();
     }
 
-    public Narrator getNarrador() {
-        return narrador;
-    }
-    
+    public int getDuration() { return duration; }
+    public Narrator getNarrator() { return narrator; }
 }

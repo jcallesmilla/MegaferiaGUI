@@ -4,19 +4,20 @@
  */
 package core.models.person;
 
-import core.Publisher;
+import core.models.Publisher;  // ← AHORA SÍ: core.models.Publisher
 import core.models.person.Person;
 
-/**
- *
- * @author edangulo
- */
 public class Manager extends Person {
-    
+
     private Publisher publisher;
 
     public Manager(long id, String firstname, String lastname) {
         super(id, firstname, lastname);
+    }
+
+    @Override
+    public Manager clone() {
+        return (Manager) super.clone();
     }
 
     public Publisher getPublisher() {
@@ -26,5 +27,4 @@ public class Manager extends Person {
     public void setPublisher(Publisher publisher) {
         this.publisher = publisher;
     }
-    
 }

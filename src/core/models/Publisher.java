@@ -2,18 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package core;
+package core.models;
 
 import core.models.book.Book;
 import core.models.person.Manager;
 import java.util.ArrayList;
 
-/**
- *
- * @author edangulo
- */
-public class Publisher {
-    
+public class Publisher implements Cloneable {
+
     private final String nit;
     private String name;
     private String address;
@@ -32,6 +28,20 @@ public class Publisher {
         this.manager.setPublisher(this);
     }
 
+    // ← SOLO AÑADIDO: clone() obligatorio para Storage
+    @Override
+    public Publisher clone() {
+        try {
+            Publisher cloned = (Publisher) super.clone();
+            cloned.books = new ArrayList<>(this.books);
+            cloned.stands = new ArrayList<>(this.stands);
+            return cloned;
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    // ← TUS MÉTODOS ORIGINALES SIN CAMBIOS
     public String getNit() {
         return nit;
     }
@@ -59,5 +69,13 @@ public class Publisher {
     public void addStand(Stand stand) {
         this.stands.add(stand);
     }
-    
+
+    // ← AÑADIDOS: para que las tablas y Storage funcionen bien
+    public ArrayList<Book> getBooks() {
+        return new ArrayList<>(books);
+    }
+
+    public ArrayList<Stand> getStands() {
+        return new ArrayList<>(stands);
+    }
 }

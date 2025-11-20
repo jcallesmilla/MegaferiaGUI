@@ -4,12 +4,8 @@
  */
 package core.models.person;
 
-/**
- *
- * @author edangulo
- */
-public abstract class Person {
-    
+public abstract class Person implements Cloneable {
+
     protected final long id;
     protected String firstname;
     protected String lastname;
@@ -20,20 +16,17 @@ public abstract class Person {
         this.lastname = lastname;
     }
 
-    public long getId() {
-        return id;
+    @Override
+    public Person clone() {
+        try {
+            return (Person) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public String getFirstname() {
-        return firstname;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-    
-    public String getFullname() {
-        return firstname + " " + lastname;
-    }
-    
+    public long getId() { return id; }
+    public String getFirstname() { return firstname; }
+    public String getLastname() { return lastname; }
+    public String getFullname() { return firstname + " " + lastname; }
 }

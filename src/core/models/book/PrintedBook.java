@@ -4,32 +4,27 @@
  */
 package core.models.book;
 
-import core.Publisher;
-import core.models.book.Book;
+import core.models.Publisher;
 import core.models.person.Author;
 import java.util.ArrayList;
 
-/**
- *
- * @author edangulo
- */
 public class PrintedBook extends Book {
-    
+
     private int pages;
     private int copies;
 
-    public PrintedBook(String title, ArrayList<Author> authors, String isbn, String genre, String format, double value, Publisher publisher, int pages, int copies) {
+    public PrintedBook(String title, ArrayList<Author> authors, String isbn, String genre,
+                       String format, double value, Publisher publisher, int pages, int copies) {
         super(title, authors, isbn, genre, format, value, publisher);
         this.pages = pages;
         this.copies = copies;
     }
 
-    public int getPages() {
-        return pages;
+    @Override
+    public PrintedBook clone() {
+        return (PrintedBook) super.clone();
     }
 
-    public int getCopies() {
-        return copies;
-    }
-    
+    public int getPages() { return pages; }
+    public int getCopies() { return copies; }
 }

@@ -5,22 +5,24 @@
 package core.models.person;
 
 import core.models.book.Audiobook;
-import core.models.person.Person;
 import java.util.ArrayList;
 
-/**
- *
- * @author edangulo
- */
 public class Narrator extends Person {
-    
+
     private ArrayList<Audiobook> books;
 
     public Narrator(long id, String firstname, String lastname) {
         super(id, firstname, lastname);
         this.books = new ArrayList<>();
     }
-    
+
+    @Override
+    public Narrator clone() {
+        Narrator cloned = (Narrator) super.clone();
+        cloned.books = new ArrayList<>(this.books);
+        return cloned;
+    }
+
     public int getBookQuantity() {
         return this.books.size();
     }
@@ -28,5 +30,8 @@ public class Narrator extends Person {
     public void addBook(Audiobook book) {
         this.books.add(book);
     }
-    
+
+    public ArrayList<Audiobook> getBooks() {
+        return new ArrayList<>(books);
+    }
 }
