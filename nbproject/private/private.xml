@@ -15,6 +15,14 @@
             <file>file:/C:/Users/boths/OneDrive/Documents/MegaferiaGUI/src/core/controllers/PublisherController.java</file>
             <file>file:/C:/Users/boths/OneDrive/Documents/MegaferiaGUI/src/core/controllers/BookController.java</file>
             <file>file:/C:/Users/boths/OneDrive/Documents/MegaferiaGUI/src/core/controllers/PurchaseController.java</file>
+            <file>file:/C:/Users/boths/OneDrive/Documents/MegaferiaGUI/src/core/models/person/Author.java</file>
+            <file>file:/C:/Users/boths/OneDrive/Documents/MegaferiaGUI/src/core/models/Stand.java</file>
+            <file>file:/C:/Users/boths/OneDrive/Documents/MegaferiaGUI/src/core/models/Publisher.java</file>
+            <file>file:/C:/Users/boths/OneDrive/Documents/MegaferiaGUI/src/core/models/book/Book.java</file>
+            <file>file:/C:/Users/boths/OneDrive/Documents/MegaferiaGUI/src/core/models/book/PrintedBook.java</file>
+            <file>file:/C:/Users/boths/OneDrive/Documents/MegaferiaGUI/src/core/models/book/DigitalBook.java</file>
+            <file>file:/C:/Users/boths/OneDrive/Documents/MegaferiaGUI/src/core/models/person/Manager.java</file>
+            <file>file:/C:/Users/boths/OneDrive/Documents/MegaferiaGUI/src/core/models/person/Narrator.java</file>
         </group>
     </open-files>
 </project-private>

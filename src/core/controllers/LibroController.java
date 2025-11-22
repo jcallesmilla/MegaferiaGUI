@@ -8,6 +8,6 @@ package core.controllers;
  *
  * @author boths
  */
-public class PublisherController {
+public class LibroController {
     
 }
