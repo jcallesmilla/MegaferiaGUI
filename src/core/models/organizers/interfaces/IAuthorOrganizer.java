@@ -4,10 +4,13 @@
  */
 package core.models.organizers.interfaces;
 
+import core.models.person.Author;
+import java.util.List;
+
 /**
  *
  * @author boths
  */
-public interface ICompraOrganizer {
-    
+public interface IAuthorOrganizer {
+     List<Author> sortByPublisherCount(List<Author> authors);
 }
