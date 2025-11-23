@@ -3,12 +3,12 @@ package core.controller;
 import core.model.Author;
 import core.model.Manager;
 import core.model.Narrator;
+import core.model.Person;
 import core.model.storage.PersonStorage;
 import core.controller.util.Response;
 import core.controller.util.Status;
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class PersonController {
 
@@ -40,7 +40,8 @@ public class PersonController {
             return new Response<>(Status.BAD_REQUEST, "Todos los campos del autor son obligatorios.");
         }
         if (!validarId(idTexto)) {
-            return new Response<>(Status.BAD_REQUEST, "El ID del autor debe ser numérico, mayor o igual a 0 y con máximo 15 dígitos.");
+            return new Response<>(Status.BAD_REQUEST,
+                    "El ID del autor debe ser numérico, mayor o igual a 0 y con máximo 15 dígitos.");
         }
         long id = convertirId(idTexto);
         if (personStorage.existeId(id)) {
@@ -56,7 +57,8 @@ public class PersonController {
             return new Response<>(Status.BAD_REQUEST, "Todos los campos del gerente son obligatorios.");
         }
         if (!validarId(idTexto)) {
-            return new Response<>(Status.BAD_REQUEST, "El ID del gerente debe ser numérico, mayor o igual a 0 y con máximo 15 dígitos.");
+            return new Response<>(Status.BAD_REQUEST,
+                    "El ID del gerente debe ser numérico, mayor o igual a 0 y con máximo 15 dígitos.");
         }
         long id = convertirId(idTexto);
         if (personStorage.existeId(id)) {
@@ -72,7 +74,8 @@ public class PersonController {
             return new Response<>(Status.BAD_REQUEST, "Todos los campos del narrador son obligatorios.");
         }
         if (!validarId(idTexto)) {
-            return new Response<>(Status.BAD_REQUEST, "El ID del narrador debe ser numérico, mayor o igual a 0 y con máximo 15 dígitos.");
+            return new Response<>(Status.BAD_REQUEST,
+                    "El ID del narrador debe ser numérico, mayor o igual a 0 y con máximo 15 dígitos.");
         }
         long id = convertirId(idTexto);
         if (personStorage.existeId(id)) {
@@ -105,6 +108,14 @@ public class PersonController {
             copias.add(narrador.copiar());
         }
         return new Response<>(Status.OK, "Narradores listados.", copias);
+    }
+
+    public Response<List<Person>> obtenerTodasLasPersonas() {
+        List<Person> copias = new ArrayList<>();
+        for (Person persona : personStorage.obtenerTodasLasPersonasOrdenadas()) {
+            copias.add(persona.copiar());
+        }
+        return new Response<>(Status.OK, "Personas listadas.", copias);
     }
 
     public Author buscarAutorPorId(long id) {

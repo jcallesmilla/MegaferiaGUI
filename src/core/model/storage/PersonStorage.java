@@ -3,13 +3,13 @@ package core.model.storage;
 import core.model.Author;
 import core.model.Manager;
 import core.model.Narrator;
+import core.model.Person;
 import core.observer.Observer;
 import core.observer.Subject;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
 
 public class PersonStorage implements Subject {
 
@@ -102,6 +102,15 @@ public class PersonStorage implements Subject {
         List<Narrator> copia = new ArrayList<>(narradores);
         Collections.sort(copia, Comparator.comparingLong(Narrator::getId));
         return copia;
+    }
+
+    public List<Person> obtenerTodasLasPersonasOrdenadas() {
+        List<Person> todasLasPersonas = new ArrayList<>();
+        todasLasPersonas.addAll(autores);
+        todasLasPersonas.addAll(gerentes);
+        todasLasPersonas.addAll(narradores);
+        Collections.sort(todasLasPersonas, Comparator.comparingLong(Person::getId));
+        return todasLasPersonas;
     }
 
     @Override
