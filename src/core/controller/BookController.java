@@ -13,17 +13,17 @@ import core.model.storage.PublisherStorage;
 import core.controller.util.Response;
 import core.controller.util.Status;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 
 public class BookController {
 
     private final BookStorage bookStorage;
     private final PersonStorage personStorage;
     private final PublisherStorage publisherStorage;
-    
+
     public BookController(BookStorage bookStorage, PersonStorage personStorage, PublisherStorage publisherStorage) {
         this.bookStorage = bookStorage;
         this.personStorage = personStorage;
@@ -153,13 +153,16 @@ public class BookController {
         return publisherStorage.buscarPorNit(nit);
     }
 
-    public Response<Book> crearLibroImpreso(String titulo, List<String> autoresTexto, String isbn, String genero, String formato, String valorTexto, String textoEditorial, String paginasTexto, String copiasTexto) {
+    public Response<Book> crearLibroImpreso(String titulo, List<String> autoresTexto, String isbn, String genero,
+            String formato, String valorTexto, String textoEditorial, String paginasTexto, String copiasTexto) {
         Response<List<Author>> validacionAutores = validarAutores(autoresTexto);
         if (validacionAutores.getCodigo() != Status.OK) {
             return new Response<>(validacionAutores.getCodigo(), validacionAutores.getMensaje());
         }
-        if (titulo == null || titulo.isEmpty() || genero == null || genero.isEmpty() || formato == null || formato.isEmpty()
-                || valorTexto == null || valorTexto.isEmpty() || paginasTexto == null || paginasTexto.isEmpty() || copiasTexto == null || copiasTexto.isEmpty()) {
+        if (titulo == null || titulo.isEmpty() || genero == null || genero.isEmpty() || formato == null
+                || formato.isEmpty()
+                || valorTexto == null || valorTexto.isEmpty() || paginasTexto == null || paginasTexto.isEmpty()
+                || copiasTexto == null || copiasTexto.isEmpty()) {
             return new Response<>(Status.BAD_REQUEST, "Todos los campos del libro impreso son obligatorios.");
         }
         if (!isbnValido(isbn)) {
@@ -194,12 +197,14 @@ public class BookController {
         return new Response<>(Status.CREATED, "Libro impreso creado correctamente.", libro);
     }
 
-    public Response<Book> crearLibroDigital(String titulo, List<String> autoresTexto, String isbn, String genero, String formato, String valorTexto, String textoEditorial, String enlace) {
+    public Response<Book> crearLibroDigital(String titulo, List<String> autoresTexto, String isbn, String genero,
+            String formato, String valorTexto, String textoEditorial, String enlace) {
         Response<List<Author>> validacionAutores = validarAutores(autoresTexto);
         if (validacionAutores.getCodigo() != Status.OK) {
             return new Response<>(validacionAutores.getCodigo(), validacionAutores.getMensaje());
         }
-        if (titulo == null || titulo.isEmpty() || genero == null || genero.isEmpty() || formato == null || formato.isEmpty()
+        if (titulo == null || titulo.isEmpty() || genero == null || genero.isEmpty() || formato == null
+                || formato.isEmpty()
                 || valorTexto == null || valorTexto.isEmpty()) {
             return new Response<>(Status.BAD_REQUEST, "Todos los campos del libro digital son obligatorios.");
         }
@@ -224,13 +229,16 @@ public class BookController {
         return new Response<>(Status.CREATED, "Libro digital creado correctamente.", libro);
     }
 
-    public Response<Book> crearAudiolibro(String titulo, List<String> autoresTexto, String isbn, String genero, String formato, String valorTexto, String textoEditorial, String duracionTexto, String idNarradorTexto) {
+    public Response<Book> crearAudiolibro(String titulo, List<String> autoresTexto, String isbn, String genero,
+            String formato, String valorTexto, String textoEditorial, String duracionTexto, String idNarradorTexto) {
         Response<List<Author>> validacionAutores = validarAutores(autoresTexto);
         if (validacionAutores.getCodigo() != Status.OK) {
             return new Response<>(validacionAutores.getCodigo(), validacionAutores.getMensaje());
         }
-        if (titulo == null || titulo.isEmpty() || genero == null || genero.isEmpty() || formato == null || formato.isEmpty()
-                || valorTexto == null || valorTexto.isEmpty() || duracionTexto == null || duracionTexto.isEmpty() || idNarradorTexto == null || idNarradorTexto.isEmpty()) {
+        if (titulo == null || titulo.isEmpty() || genero == null || genero.isEmpty() || formato == null
+                || formato.isEmpty()
+                || valorTexto == null || valorTexto.isEmpty() || duracionTexto == null || duracionTexto.isEmpty()
+                || idNarradorTexto == null || idNarradorTexto.isEmpty()) {
             return new Response<>(Status.BAD_REQUEST, "Todos los campos del audiolibro son obligatorios.");
         }
         if (!isbnValido(isbn)) {
@@ -306,11 +314,8 @@ public class BookController {
         for (Book libro : autor.getLibros()) {
             copias.add(libro.copiar());
         }
-
-        // --- CAMBIO A ASCENDENTE por ISBN ---
-        copias.sort((libro1, libro2) -> libro1.getIsbn().compareTo(libro2.getIsbn()));
-        // --- FIN DE CAMBIO ---
-
+        // Ordenar por ISBN
+        copias.sort(Comparator.comparing(Book::getIsbn));
         return new Response<>(Status.OK, "Libros del autor listados.", copias);
     }
 
@@ -321,11 +326,6 @@ public class BookController {
                 copias.add(libro.copiar());
             }
         }
-
-        // --- CAMBIO A ASCENDENTE por ISBN ---
-        copias.sort((libro1, libro2) -> libro1.getIsbn().compareTo(libro2.getIsbn()));
-        // --- FIN DE CAMBIO ---
-        
         return new Response<>(Status.OK, "Libros filtrados por formato.", copias);
     }
 
