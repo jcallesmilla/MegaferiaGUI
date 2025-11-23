@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package core.view;
 
 import core.controller.BookController;
@@ -23,8 +19,8 @@ import core.model.storage.BookStorage;
 import core.model.storage.PersonStorage;
 import core.model.storage.PublisherStorage;
 import core.model.storage.StandStorage;
-import core.util.Response;
-import core.util.StatusCode;
+import core.controller.util.Response;
+import core.controller.util.Status;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -109,7 +105,7 @@ public class MegaferiaFrame extends javax.swing.JFrame implements Observer {
     private void cargarGerentesEnCombo() {
         Response<List<Manager>> respuesta = personController.obtenerGerentes();
         jComboBox1.removeAllItems();
-        if (respuesta.getCodigo() == StatusCode.SUCCESS && respuesta.getDato() != null) {
+        if (respuesta.getCodigo() == Status.OK && respuesta.getDato() != null) {
             for (Manager gerente : respuesta.getDato()) {
                 jComboBox1.addItem(gerente.getId() + " - " + gerente.getNombreCompleto());
             }
@@ -120,7 +116,7 @@ public class MegaferiaFrame extends javax.swing.JFrame implements Observer {
         Response<List<Author>> respuesta = personController.obtenerAutores();
         jComboBox3.removeAllItems();
         jComboBox10.removeAllItems();
-        if (respuesta.getCodigo() == StatusCode.SUCCESS && respuesta.getDato() != null) {
+        if (respuesta.getCodigo() == Status.OK && respuesta.getDato() != null) {
             for (Author autor : respuesta.getDato()) {
                 String texto = autor.getId() + " - " + autor.getNombreCompleto();
                 jComboBox3.addItem(texto);
@@ -132,7 +128,7 @@ public class MegaferiaFrame extends javax.swing.JFrame implements Observer {
     private void cargarNarradoresEnCombo() {
         Response<List<Narrator>> respuesta = personController.obtenerNarradores();
         jComboBox6.removeAllItems();
-        if (respuesta.getCodigo() == StatusCode.SUCCESS && respuesta.getDato() != null) {
+        if (respuesta.getCodigo() == Status.OK && respuesta.getDato() != null) {
             for (Narrator narrador : respuesta.getDato()) {
                 jComboBox6.addItem(narrador.getId() + " - " + narrador.getNombreCompleto());
             }
@@ -143,7 +139,7 @@ public class MegaferiaFrame extends javax.swing.JFrame implements Observer {
         Response<List<Publisher>> respuesta = publisherController.obtenerEditoriales();
         jComboBox5.removeAllItems();
         jComboBox8.removeAllItems();
-        if (respuesta.getCodigo() == StatusCode.SUCCESS && respuesta.getDato() != null) {
+        if (respuesta.getCodigo() == Status.OK && respuesta.getDato() != null) {
             for (Publisher editorial : respuesta.getDato()) {
                 String texto = editorial.getNombre() + " (" + editorial.getNit() + ")";
                 jComboBox5.addItem(texto);
@@ -155,7 +151,7 @@ public class MegaferiaFrame extends javax.swing.JFrame implements Observer {
     private void cargarStandsEnCombo() {
         Response<List<Stand>> respuesta = standController.obtenerStands();
         jComboBox7.removeAllItems();
-        if (respuesta.getCodigo() == StatusCode.SUCCESS && respuesta.getDato() != null) {
+        if (respuesta.getCodigo() == Status.OK && respuesta.getDato() != null) {
             for (Stand stand : respuesta.getDato()) {
                 jComboBox7.addItem(String.valueOf(stand.getId()));
             }
@@ -166,7 +162,7 @@ public class MegaferiaFrame extends javax.swing.JFrame implements Observer {
         Response<List<Publisher>> respuesta = publisherController.obtenerEditoriales();
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
-        if (respuesta.getCodigo() == StatusCode.SUCCESS && respuesta.getDato() != null) {
+        if (respuesta.getCodigo() == Status.OK && respuesta.getDato() != null) {
             for (Publisher editorial : respuesta.getDato()) {
                 String gerenteNombre = editorial.getGerente() != null ? editorial.getGerente().getNombreCompleto() : "-";
                 int cantidadStands = editorial.getStands() != null ? editorial.getStands().size() : 0;
@@ -179,20 +175,20 @@ public class MegaferiaFrame extends javax.swing.JFrame implements Observer {
         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
         model.setRowCount(0);
         Response<List<Author>> autores = personController.obtenerAutores();
-        if (autores.getCodigo() == StatusCode.SUCCESS && autores.getDato() != null) {
+        if (autores.getCodigo() == Status.OK && autores.getDato() != null) {
             for (Author autor : autores.getDato()) {
                 model.addRow(new Object[]{autor.getId(), autor.getNombreCompleto(), "Autor", "-", autor.getLibros().size()});
             }
         }
         Response<List<Manager>> gerentes = personController.obtenerGerentes();
-        if (gerentes.getCodigo() == StatusCode.SUCCESS && gerentes.getDato() != null) {
+        if (gerentes.getCodigo() == Status.OK && gerentes.getDato() != null) {
             for (Manager gerente : gerentes.getDato()) {
                 String editorial = gerente.getEditorial() != null ? gerente.getEditorial().getNombre() : "-";
                 model.addRow(new Object[]{gerente.getId(), gerente.getNombreCompleto(), "Gerente", editorial, 0});
             }
         }
         Response<List<Narrator>> narradores = personController.obtenerNarradores();
-        if (narradores.getCodigo() == StatusCode.SUCCESS && narradores.getDato() != null) {
+        if (narradores.getCodigo() == Status.OK && narradores.getDato() != null) {
             for (Narrator narrador : narradores.getDato()) {
                 model.addRow(new Object[]{narrador.getId(), narrador.getNombreCompleto(), "Narrador", "-", narrador.getAudiolibros().size()});
             }
@@ -203,7 +199,7 @@ public class MegaferiaFrame extends javax.swing.JFrame implements Observer {
         Response<List<Stand>> respuesta = standController.obtenerStands();
         DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
         model.setRowCount(0);
-        if (respuesta.getCodigo() == StatusCode.SUCCESS && respuesta.getDato() != null) {
+        if (respuesta.getCodigo() == Status.OK && respuesta.getDato() != null) {
             for (Stand stand : respuesta.getDato()) {
                 String publicaciones = "";
                 if (stand.getEditoriales() != null && !stand.getEditoriales().isEmpty()) {
@@ -222,7 +218,7 @@ public class MegaferiaFrame extends javax.swing.JFrame implements Observer {
         DefaultTableModel model = (DefaultTableModel) jTable4.getModel();
         model.setRowCount(0);
         Response<List<Book>> respuesta = bookController.obtenerLibros();
-        if (respuesta.getCodigo() != StatusCode.SUCCESS || respuesta.getDato() == null) {
+        if (respuesta.getCodigo() != Status.OK || respuesta.getDato() == null) {
             return;
         }
         for (Book libro : respuesta.getDato()) {
@@ -267,7 +263,7 @@ public class MegaferiaFrame extends javax.swing.JFrame implements Observer {
         String seleccion = jComboBox10.getItemAt(jComboBox10.getSelectedIndex());
         long idAutor = Long.parseLong(seleccion.split(" - ")[0]);
         Response<List<Book>> respuesta = bookController.obtenerLibrosPorAutor(idAutor);
-        if (respuesta.getCodigo() == StatusCode.SUCCESS && respuesta.getDato() != null) {
+        if (respuesta.getCodigo() == Status.OK && respuesta.getDato() != null) {
             for (Book libro : respuesta.getDato()) {
                 agregarLibroATabla(model, libro);
             }
@@ -278,7 +274,7 @@ public class MegaferiaFrame extends javax.swing.JFrame implements Observer {
         DefaultTableModel model = (DefaultTableModel) jTable6.getModel();
         model.setRowCount(0);
         Response<List<Author>> respuesta = bookController.autoresConMasEditoriales();
-        if (respuesta.getCodigo() == StatusCode.SUCCESS && respuesta.getDato() != null) {
+        if (respuesta.getCodigo() == Status.OK && respuesta.getDato() != null) {
             for (Author autor : respuesta.getDato()) {
                 int cantidad = 0;
                 if (autor.getLibros() != null) {
@@ -1651,7 +1647,7 @@ public class MegaferiaFrame extends javax.swing.JFrame implements Observer {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         Response<Stand> respuesta = standController.crearStand(jTextField2.getText(), jTextField1.getText());
         JOptionPane.showMessageDialog(this, respuesta.getMensaje());
-        if (respuesta.getCodigo() == StatusCode.SUCCESS) {
+        if (respuesta.getCodigo() == Status.CREATED) {
             jTextField1.setText("");
             jTextField2.setText("");
         }
@@ -1660,7 +1656,7 @@ public class MegaferiaFrame extends javax.swing.JFrame implements Observer {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         Response<Author> respuesta = personController.crearAutor(jTextField3.getText(), jTextField4.getText(), jTextField5.getText());
         JOptionPane.showMessageDialog(this, respuesta.getMensaje());
-        if (respuesta.getCodigo() == StatusCode.SUCCESS) {
+        if (respuesta.getCodigo() == Status.CREATED) {
             jTextField3.setText("");
             jTextField4.setText("");
             jTextField5.setText("");
@@ -1670,7 +1666,7 @@ public class MegaferiaFrame extends javax.swing.JFrame implements Observer {
     private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
         Response<Manager> respuesta = personController.crearGerente(jTextField3.getText(), jTextField4.getText(), jTextField5.getText());
         JOptionPane.showMessageDialog(this, respuesta.getMensaje());
-        if (respuesta.getCodigo() == StatusCode.SUCCESS) {
+        if (respuesta.getCodigo() == Status.CREATED) {
             jTextField3.setText("");
             jTextField4.setText("");
             jTextField5.setText("");
@@ -1680,7 +1676,7 @@ public class MegaferiaFrame extends javax.swing.JFrame implements Observer {
     private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
         Response<Narrator> respuesta = personController.crearNarrador(jTextField3.getText(), jTextField4.getText(), jTextField5.getText());
         JOptionPane.showMessageDialog(this, respuesta.getMensaje());
-        if (respuesta.getCodigo() == StatusCode.SUCCESS) {
+        if (respuesta.getCodigo() == Status.CREATED) {
             jTextField3.setText("");
             jTextField4.setText("");
             jTextField5.setText("");
@@ -1688,7 +1684,7 @@ public class MegaferiaFrame extends javax.swing.JFrame implements Observer {
     }//GEN-LAST:event_jButton17ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        if (jComboBox1.getItemCount() == 0) {
+            if (jComboBox1.getItemCount() == 0) {
             JOptionPane.showMessageDialog(this, "Primero debes crear un gerente.");
             return;
         }
@@ -1698,7 +1694,7 @@ public class MegaferiaFrame extends javax.swing.JFrame implements Observer {
         String idGerente = jComboBox1.getItemAt(jComboBox1.getSelectedIndex()).split(" - ")[0];
         Response<Publisher> respuesta = publisherController.crearEditorial(nit, nombre, direccion, idGerente);
         JOptionPane.showMessageDialog(this, respuesta.getMensaje());
-        if (respuesta.getCodigo() == StatusCode.SUCCESS) {
+        if (respuesta.getCodigo() == Status.CREATED) {
             jTextField6.setText("");
             jTextField7.setText("");
             jTextField8.setText("");
@@ -1712,7 +1708,7 @@ public class MegaferiaFrame extends javax.swing.JFrame implements Observer {
         }
         String author = jComboBox3.getItemAt(jComboBox3.getSelectedIndex());
         Response<List<String>> respuesta = bookController.agregarAutorALaLista(autoresSeleccionados, author);
-        if (respuesta.getCodigo() != StatusCode.SUCCESS) {
+        if (respuesta.getCodigo() != Status.OK) {
             JOptionPane.showMessageDialog(this, respuesta.getMensaje());
         }
         autoresSeleccionados = respuesta.getDato();
@@ -1740,7 +1736,7 @@ public class MegaferiaFrame extends javax.swing.JFrame implements Observer {
         String formato = jComboBox4.getItemAt(jComboBox4.getSelectedIndex());
         String valor = jTextField12.getText();
         String editorial = jComboBox5.getItemAt(jComboBox5.getSelectedIndex());
-        Response<Book> respuesta = new Response<>(StatusCode.ERROR_VALIDACION, "Selecciona un tipo de libro.");
+        Response<Book> respuesta = new Response<>(Status.BAD_REQUEST, "Selecciona un tipo de libro.");
         if (jRadioButton1.isSelected()) {
             respuesta = bookController.crearLibroImpreso(titulo, autoresSeleccionados, isbn, genero, formato, valor, editorial, jTextField13.getText(), jTextField14.getText());
         }
@@ -1756,7 +1752,7 @@ public class MegaferiaFrame extends javax.swing.JFrame implements Observer {
             respuesta = bookController.crearAudiolibro(titulo, autoresSeleccionados, isbn, genero, formato, valor, editorial, jTextField16.getText(), narrador);
         }
         JOptionPane.showMessageDialog(this, respuesta.getMensaje());
-        if (respuesta.getCodigo() == StatusCode.SUCCESS) {
+        if (respuesta.getCodigo() == Status.CREATED) {
             jTextField9.setText("");
             jTextField11.setText("");
             jTextField12.setText("");
@@ -1776,7 +1772,7 @@ public class MegaferiaFrame extends javax.swing.JFrame implements Observer {
         }
         String stand = jComboBox7.getItemAt(jComboBox7.getSelectedIndex());
         Response<List<String>> respuesta = compraController.agregarStandALista(standsSeleccionados, stand);
-        if (respuesta.getCodigo() != StatusCode.SUCCESS) {
+        if (respuesta.getCodigo() != Status.OK) {
             JOptionPane.showMessageDialog(this, respuesta.getMensaje());
         }
         standsSeleccionados = respuesta.getDato();
@@ -1800,7 +1796,7 @@ public class MegaferiaFrame extends javax.swing.JFrame implements Observer {
         }
         String publisher = jComboBox8.getItemAt(jComboBox8.getSelectedIndex());
         Response<List<String>> respuesta = compraController.agregarEditorialALista(editorialesSeleccionadas, publisher);
-        if (respuesta.getCodigo() != StatusCode.SUCCESS) {
+        if (respuesta.getCodigo() != Status.OK) {
             JOptionPane.showMessageDialog(this, respuesta.getMensaje());
         }
         editorialesSeleccionadas = respuesta.getDato();
@@ -1820,7 +1816,7 @@ public class MegaferiaFrame extends javax.swing.JFrame implements Observer {
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         Response<String> respuesta = compraController.comprarStands(standsSeleccionados, editorialesSeleccionadas);
         JOptionPane.showMessageDialog(this, respuesta.getMensaje());
-        if (respuesta.getCodigo() == StatusCode.SUCCESS) {
+        if (respuesta.getCodigo() == Status.OK) {
             standsSeleccionados = new ArrayList<>();
             editorialesSeleccionadas = new ArrayList<>();
             jTextArea1.setText("");
@@ -1857,7 +1853,7 @@ public class MegaferiaFrame extends javax.swing.JFrame implements Observer {
         DefaultTableModel model = (DefaultTableModel) jTable5.getModel();
         model.setRowCount(0);
         Response<List<Book>> respuesta = bookController.obtenerLibrosPorFormato(formato);
-        if (respuesta.getCodigo() == StatusCode.SUCCESS && respuesta.getDato() != null) {
+        if (respuesta.getCodigo() == Status.OK && respuesta.getDato() != null) {
             for (Book libro : respuesta.getDato()) {
                 agregarLibroATabla(model, libro);
             }

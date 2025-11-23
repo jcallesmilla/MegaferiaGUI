@@ -4,8 +4,8 @@ import core.model.Author;
 import core.model.Manager;
 import core.model.Narrator;
 import core.model.storage.PersonStorage;
-import core.util.Response;
-import core.util.StatusCode;
+import core.controller.util.Response;
+import core.controller.util.Status;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,50 +37,50 @@ public class PersonController {
 
     public Response<Author> crearAutor(String idTexto, String nombres, String apellidos) {
         if (!camposNombreValidos(nombres, apellidos) || idTexto == null || idTexto.isEmpty()) {
-            return new Response<>(StatusCode.ERROR_VALIDACION, "Todos los campos del autor son obligatorios.");
+            return new Response<>(Status.BAD_REQUEST, "Todos los campos del autor son obligatorios.");
         }
         if (!validarId(idTexto)) {
-            return new Response<>(StatusCode.ERROR_VALIDACION, "El ID del autor debe ser numérico, mayor o igual a 0 y con máximo 15 dígitos.");
+            return new Response<>(Status.BAD_REQUEST, "El ID del autor debe ser numérico, mayor o igual a 0 y con máximo 15 dígitos.");
         }
         long id = convertirId(idTexto);
         if (personStorage.existeId(id)) {
-            return new Response<>(StatusCode.ERROR_DUPLICADO, "Ya existe una persona con ese ID.");
+            return new Response<>(Status.BAD_REQUEST, "Ya existe una persona con ese ID.");
         }
         Author autor = new Author(id, nombres, apellidos);
         personStorage.guardarAutor(autor);
-        return new Response<>(StatusCode.SUCCESS, "Autor creado correctamente.", autor);
+        return new Response<>(Status.CREATED, "Autor creado correctamente.", autor);
     }
 
     public Response<Manager> crearGerente(String idTexto, String nombres, String apellidos) {
         if (!camposNombreValidos(nombres, apellidos) || idTexto == null || idTexto.isEmpty()) {
-            return new Response<>(StatusCode.ERROR_VALIDACION, "Todos los campos del gerente son obligatorios.");
+            return new Response<>(Status.BAD_REQUEST, "Todos los campos del gerente son obligatorios.");
         }
         if (!validarId(idTexto)) {
-            return new Response<>(StatusCode.ERROR_VALIDACION, "El ID del gerente debe ser numérico, mayor o igual a 0 y con máximo 15 dígitos.");
+            return new Response<>(Status.BAD_REQUEST, "El ID del gerente debe ser numérico, mayor o igual a 0 y con máximo 15 dígitos.");
         }
         long id = convertirId(idTexto);
         if (personStorage.existeId(id)) {
-            return new Response<>(StatusCode.ERROR_DUPLICADO, "Ya existe una persona con ese ID.");
+            return new Response<>(Status.BAD_REQUEST, "Ya existe una persona con ese ID.");
         }
         Manager gerente = new Manager(id, nombres, apellidos);
         personStorage.guardarGerente(gerente);
-        return new Response<>(StatusCode.SUCCESS, "Gerente creado correctamente.", gerente);
+        return new Response<>(Status.CREATED, "Gerente creado correctamente.", gerente);
     }
 
     public Response<Narrator> crearNarrador(String idTexto, String nombres, String apellidos) {
         if (!camposNombreValidos(nombres, apellidos) || idTexto == null || idTexto.isEmpty()) {
-            return new Response<>(StatusCode.ERROR_VALIDACION, "Todos los campos del narrador son obligatorios.");
+            return new Response<>(Status.BAD_REQUEST, "Todos los campos del narrador son obligatorios.");
         }
         if (!validarId(idTexto)) {
-            return new Response<>(StatusCode.ERROR_VALIDACION, "El ID del narrador debe ser numérico, mayor o igual a 0 y con máximo 15 dígitos.");
+            return new Response<>(Status.BAD_REQUEST, "El ID del narrador debe ser numérico, mayor o igual a 0 y con máximo 15 dígitos.");
         }
         long id = convertirId(idTexto);
         if (personStorage.existeId(id)) {
-            return new Response<>(StatusCode.ERROR_DUPLICADO, "Ya existe una persona con ese ID.");
+            return new Response<>(Status.BAD_REQUEST, "Ya existe una persona con ese ID.");
         }
         Narrator narrador = new Narrator(id, nombres, apellidos);
         personStorage.guardarNarrador(narrador);
-        return new Response<>(StatusCode.SUCCESS, "Narrador creado correctamente.", narrador);
+        return new Response<>(Status.CREATED, "Narrador creado correctamente.", narrador);
     }
 
     public Response<List<Author>> obtenerAutores() {
@@ -88,7 +88,7 @@ public class PersonController {
         for (Author autor : personStorage.obtenerAutoresOrdenados()) {
             copias.add(autor.copiar());
         }
-        return new Response<>(StatusCode.SUCCESS, "Autores listados.", copias);
+        return new Response<>(Status.OK, "Autores listados.", copias);
     }
 
     public Response<List<Manager>> obtenerGerentes() {
@@ -96,7 +96,7 @@ public class PersonController {
         for (Manager gerente : personStorage.obtenerGerentesOrdenados()) {
             copias.add(gerente.copiar());
         }
-        return new Response<>(StatusCode.SUCCESS, "Gerentes listados.", copias);
+        return new Response<>(Status.OK, "Gerentes listados.", copias);
     }
 
     public Response<List<Narrator>> obtenerNarradores() {
@@ -104,7 +104,7 @@ public class PersonController {
         for (Narrator narrador : personStorage.obtenerNarradoresOrdenados()) {
             copias.add(narrador.copiar());
         }
-        return new Response<>(StatusCode.SUCCESS, "Narradores listados.", copias);
+        return new Response<>(Status.OK, "Narradores listados.", copias);
     }
 
     public Author buscarAutorPorId(long id) {

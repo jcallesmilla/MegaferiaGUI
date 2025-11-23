@@ -1,31 +1,27 @@
-package core.util;
+package core.controller.util;
 
-/**
- * Respuesta genérica para las operaciones de los controladores.
- * @param <T> tipo de dato a retornar.
- */
 public class Response<T> {
 
-    private StatusCode codigo;
+    private int codigo;
     private String mensaje;
     private T dato;
 
-    public Response(StatusCode codigo, String mensaje) {
+    public Response(int codigo, String mensaje) {
         this.codigo = codigo;
         this.mensaje = mensaje;
     }
 
-    public Response(StatusCode codigo, String mensaje, T dato) {
+    public Response(int codigo, String mensaje, T dato) {
         this.codigo = codigo;
         this.mensaje = mensaje;
         this.dato = dato;
     }
 
-    public StatusCode getCodigo() {
+    public int getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(StatusCode codigo) {
+    public void setCodigo(int codigo) {
         this.codigo = codigo;
     }
 
