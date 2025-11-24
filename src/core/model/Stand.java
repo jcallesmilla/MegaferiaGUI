@@ -53,19 +53,18 @@ public class Stand implements IStand {
     @Override
     public IStand copiar() {
         Stand copia = new Stand(this.id, this.precio);
-        // NO copiar las editoriales para evitar ciclo infinito
-        // Solo copiar información básica de las editoriales
+        
         List<IPublisher> copiasEditoriales = new ArrayList<>();
         if (this.editoriales != null) {
             for (IPublisher editorial : this.editoriales) {
-                // Crear una copia superficial solo con datos básicos
+                
                 IPublisher copiaEditorial = new Publisher(
                         editorial.getNit(),
                         editorial.getNombre(),
                         editorial.getDireccion(),
-                        null // No copiar gerente para evitar complejidad
+                        null 
                 );
-                // NO copiar los stands de la editorial (evita el ciclo)
+                
                 copiasEditoriales.add(copiaEditorial);
             }
         }

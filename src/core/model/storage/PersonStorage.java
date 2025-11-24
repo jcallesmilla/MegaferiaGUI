@@ -11,10 +11,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-/**
- * Repositorio para personas.
- * Patrón Singleton para garantizar una única instancia.
- */
+
 public class PersonStorage implements Subject {
 
     private static PersonStorage instance = null;

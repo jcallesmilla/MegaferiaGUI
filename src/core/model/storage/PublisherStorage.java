@@ -8,10 +8,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-/**
- * Repositorio para editoriales.
- * Patrón Singleton para garantizar una única instancia.
- */
+
 public class PublisherStorage implements Subject {
 
     private static PublisherStorage instance = null;

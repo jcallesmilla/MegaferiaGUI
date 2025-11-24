@@ -101,18 +101,18 @@ public class Publisher implements IPublisher {
             copia.setGerente(gerenteCopia);
         }
 
-        // Copiar stands (solo datos básicos, SIN editoriales para evitar ciclo)
+        // Copiar stands 
         List<IStand> copiasStands = new ArrayList<>();
         if (this.stands != null) {
             for (IStand stand : this.stands) {
                 IStand copiaStand = new Stand(stand.getId(), stand.getPrecio());
-                // NO copiar las editoriales del stand (evita el ciclo)
+                
                 copiasStands.add(copiaStand);
             }
         }
         copia.setStands(copiasStands);
 
-        // Copiar libros (ya está bien implementado)
+        // Copiar libros 
         List<IBook> copiasLibros = new ArrayList<>();
         if (this.libros != null) {
             for (IBook libro : this.libros) {

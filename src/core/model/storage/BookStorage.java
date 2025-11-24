@@ -8,10 +8,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-/**
- * Repositorio para libros de cualquier formato.
- * Patrón Singleton para garantizar una única instancia.
- */
+
 public class BookStorage implements Subject {
 
     private static BookStorage instance = null;

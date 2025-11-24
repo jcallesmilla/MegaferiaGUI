@@ -2,11 +2,7 @@ package core.model;
 
 import core.model.interfaces.IPerson;
 
-/**
- * Clase base para personas dentro de la feria.
- * Solo guarda datos sencillos y ofrece getters, setters y un método para
- * copiar.
- */
+
 public abstract class Person implements IPerson {
 
     protected long id;
@@ -47,10 +43,6 @@ public abstract class Person implements IPerson {
         return nombres + " " + apellidos;
     }
 
-    /**
-     * Crea una copia sencilla de la persona.
-     * 
-     * @return copia sin compartir referencias.
-     */
+   
     public abstract IPerson copiar();
 }
